@@ -54,6 +54,12 @@
     [taskTable setDataSource:self];
     taskTable.delegate=self;
     
+    if ([tasks count] == 0) {
+        [tasks addObject:@"Walk the dogs"];
+        [tasks addObject:@"Feed the hogs"];
+        [tasks addObject:@"Chop the logs"];
+    }
+    
     return YES;
 }
 
@@ -88,12 +94,6 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ([tasks count] == 0) {
-        [tasks addObject:@"Walk the dogs"];
-        [tasks addObject:@"Feed the hogs"];
-        [tasks addObject:@"Chop the logs"];
-    }
-    
     return [tasks count];
 }
 
@@ -128,10 +128,12 @@
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    UITextField *ft = [alertView textFieldAtIndex:0];
-    NSString* changedContent = [ft text];
-    [tasks replaceObjectAtIndex:[_indexSelectedPath row] withObject:changedContent];
-    [taskTable reloadData];
+    if (buttonIndex == 1){
+        UITextField *ft = [alertView textFieldAtIndex:0];
+        NSString* changedContent = [ft text];
+        [tasks replaceObjectAtIndex:[_indexSelectedPath row] withObject:changedContent];
+        [taskTable reloadData];
+    }else{}
 }
 
 -(void)alertViewCancel:(UIAlertView *)alertView{
